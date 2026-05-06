@@ -60,6 +60,11 @@ class YouTubeDownloader(BaseDownloader):
             'no_warnings': True,
             'extract_flat': False,
             'no_color': True,
+            'extractor_args': {
+                'youtube': {
+                    'player_client': ['android', 'web']
+                }
+            }
         })
         
         loop = asyncio.get_event_loop()
