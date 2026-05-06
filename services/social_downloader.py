@@ -111,7 +111,8 @@ class SocialDownloader(BaseDownloader):
             )
             formats.append(default_format)
         else:
-            # --- Separate audio-only and combined streams ---
+            # --- Separate video-only, audio-only, and combined streams ---
+            video_only = []
             audio_only = []
             combined = []
             
@@ -126,8 +127,71 @@ class SocialDownloader(BaseDownloader):
                 
                 if has_video and has_audio:
                     combined.append(f)
+                elif has_video and not has_audio:
+                    video_only.append(f)
                 elif has_audio and not has_video:
                     audio_only.append(f)
+            
+            # --- Find the best audio stream for merging ---
+            best_audio = None
+            if audio_only:
+                best_audio = max(
+                    audio_only,
+                    key=lambda a: (
+                        1 if a.get('ext') in ('m4a', 'mp4', 'aac') else 0,
+                        a.get('abr') or a.get('tbr') or 0,
+                    )
+                )
+
+            # --- Create merged "Video+Audio" entries for video-only streams (Requires Backend) ---
+            if best_audio:
+                seen_heights = set()
+                for vf in sorted(video_only, key=lambda x: (
+                    -(x.get('height') or 0),
+                    -(x.get('tbr') or 0),
+                )):
+                    height = vf.get('height')
+                    if not height or height in seen_heights:
+                        continue
+                    seen_heights.add(height)
+                    
+                    merged_id = f"{vf.get('format_id')}+{best_audio.get('format_id')}"
+                    ext = 'mp4'
+                    
+                    v_size = vf.get('filesize') or vf.get('filesize_approx') or 0
+                    a_size = best_audio.get('filesize') or best_audio.get('filesize_approx') or 0
+                    total_size = (v_size + a_size) if (v_size and a_size) else None
+                    
+                    fps = vf.get('fps')
+                    parts = [f"{height}p"]
+                    if fps and fps > 30:
+                        parts.append(f"{int(fps)}fps")
+                    parts.append("MP4")
+                    parts.append("(Backend Merge)")
+                    if total_size:
+                        parts.append(f"~{self._format_filesize(total_size)}")
+                    
+                    label = " ".join(parts)
+                    if label in seen_labels:
+                        continue
+                    seen_labels.add(label)
+                    
+                    formats.append(FormatInfo(
+                        format_id=merged_id,
+                        extension=ext,
+                        resolution=f"{vf.get('width', '?')}x{height}",
+                        url=None,  # Must be downloaded via backend
+                        filesize=total_size,
+                        filesize_approx=total_size,
+                        vcodec=vf.get('vcodec'),
+                        acodec=best_audio.get('acodec'),
+                        fps=fps,
+                        tbr=(vf.get('tbr') or 0) + (best_audio.get('tbr') or 0) or None,
+                        label=label,
+                        has_video=True,
+                        has_audio=True,
+                    ))
+            
             
             # --- Add native combined (progressive) formats ---
             for f in combined:
