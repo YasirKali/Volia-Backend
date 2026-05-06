@@ -11,7 +11,7 @@ import logging
 import threading
 
 from api.routes import router as api_router
-from services.cookie_helper import auto_setup_cookies
+from services.cookie_helper import auto_setup_cookies, set_cookie_file
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -43,6 +43,12 @@ app.include_router(api_router, prefix="/api")
 async def startup_event():
     """Auto-setup browser cookies on startup."""
     def _setup():
+        cookie_path = os.path.join(os.path.dirname(__file__), "cookies.txt")
+        if os.path.exists(cookie_path):
+            set_cookie_file(cookie_path)
+            logger.info("✅ Using static cookies.txt file for authentication")
+            return
+            
         logger.info("🍪 Auto-detecting browser cookies...")
         result = auto_setup_cookies()
         if result['success']:
