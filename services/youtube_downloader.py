@@ -93,8 +93,7 @@ class YouTubeDownloader(BaseDownloader):
         
         raw_formats = info.get('formats', [])
         
-        # --- Separate video-only, audio-only, and combined streams ---
-        video_only = []
+        # --- Separate audio-only and combined streams ---
         audio_only = []
         combined = []
         
@@ -102,80 +101,15 @@ class YouTubeDownloader(BaseDownloader):
             ext = f.get('ext', 'unknown')
             has_video = f.get('vcodec', 'none') != 'none'
             has_audio = f.get('acodec', 'none') != 'none'
+            url = f.get('url')
             
-            if not has_video and not has_audio:
-                continue
-            if ext in ('mhtml',):
+            if not url or ext in ('mhtml',):
                 continue
             
             if has_video and has_audio:
                 combined.append(f)
-            elif has_video and not has_audio:
-                video_only.append(f)
             elif has_audio and not has_video:
                 audio_only.append(f)
-        
-        # --- Find the best audio stream for merging ---
-        best_audio = None
-        if audio_only:
-            # Prefer m4a/mp4 audio, then highest bitrate
-            best_audio = max(
-                audio_only,
-                key=lambda a: (
-                    1 if a.get('ext') in ('m4a', 'mp4') else 0,
-                    a.get('abr') or a.get('tbr') or 0,
-                )
-            )
-        
-        # --- Create merged "Video+Audio" entries for video-only streams ---
-        if best_audio:
-            # De-duplicate by height to keep the best per resolution
-            seen_heights = set()
-            for vf in sorted(video_only, key=lambda x: (
-                -(x.get('height') or 0),
-                -(x.get('tbr') or 0),
-            )):
-                height = vf.get('height')
-                if not height or height in seen_heights:
-                    continue
-                seen_heights.add(height)
-                
-                merged_id = f"{vf.get('format_id')}+{best_audio.get('format_id')}"
-                ext = 'mp4'  # merge_output_format is mp4
-                
-                # Estimate combined filesize
-                v_size = vf.get('filesize') or vf.get('filesize_approx') or 0
-                a_size = best_audio.get('filesize') or best_audio.get('filesize_approx') or 0
-                total_size = (v_size + a_size) if (v_size and a_size) else None
-                
-                fps = vf.get('fps')
-                parts = [f"{height}p"]
-                if fps and fps > 30:
-                    parts.append(f"{int(fps)}fps")
-                parts.append("MP4")
-                parts.append("(Video+Audio)")
-                if total_size:
-                    parts.append(f"~{self._format_filesize(total_size)}")
-                
-                label = " ".join(parts)
-                if label in seen_labels:
-                    continue
-                seen_labels.add(label)
-                
-                formats.append(FormatInfo(
-                    format_id=merged_id,
-                    extension=ext,
-                    resolution=f"{vf.get('width', '?')}x{height}",
-                    filesize=total_size,
-                    filesize_approx=total_size,
-                    vcodec=vf.get('vcodec'),
-                    acodec=best_audio.get('acodec'),
-                    fps=fps,
-                    tbr=(vf.get('tbr') or 0) + (best_audio.get('tbr') or 0) or None,
-                    label=label,
-                    has_video=True,
-                    has_audio=True,
-                ))
         
         # --- Add native combined (progressive) formats ---
         for f in combined:
@@ -188,6 +122,7 @@ class YouTubeDownloader(BaseDownloader):
                 format_id=f.get('format_id', ''),
                 extension=f.get('ext', 'unknown'),
                 resolution=f"{f.get('width', '?')}x{height}" if height else None,
+                url=f.get('url'),
                 filesize=f.get('filesize'),
                 filesize_approx=f.get('filesize_approx'),
                 vcodec=f.get('vcodec'),
@@ -209,6 +144,7 @@ class YouTubeDownloader(BaseDownloader):
                 format_id=f.get('format_id', ''),
                 extension=f.get('ext', 'unknown'),
                 resolution=None,
+                url=f.get('url'),
                 filesize=f.get('filesize'),
                 filesize_approx=f.get('filesize_approx'),
                 vcodec=f.get('vcodec'),

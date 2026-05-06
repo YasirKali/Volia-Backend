@@ -15,6 +15,7 @@ class FormatInfo(BaseModel):
     format_id: str
     extension: str
     resolution: Optional[str] = None
+    url: Optional[str] = None  # Direct download URL
     filesize: Optional[int] = None
     filesize_approx: Optional[int] = None
     vcodec: Optional[str] = None
