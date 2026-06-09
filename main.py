@@ -9,6 +9,11 @@ from fastapi.staticfiles import StaticFiles
 import os
 import logging
 import threading
+import asyncio
+import sys
+
+if sys.platform == 'win32':
+    asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
 
 from api.routes import router as api_router
 from services.cookie_helper import auto_setup_cookies, set_cookie_file

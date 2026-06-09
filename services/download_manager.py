@@ -13,6 +13,7 @@ from services.platform_detector import detect_platform, validate_url
 from services.youtube_downloader import YouTubeDownloader
 from services.social_downloader import SocialDownloader
 from services.base_downloader import BaseDownloader
+from services.spotify_downloader import SpotifyDownloader
 
 
 class DownloadManager:
@@ -33,6 +34,7 @@ class DownloadManager:
             "twitter": SocialDownloader("twitter"),
             "facebook": SocialDownloader("facebook"),
             "instagram": SocialDownloader("instagram"),
+            "spotify": SpotifyDownloader(),
         }
     
     def _get_downloader(self, platform: str) -> BaseDownloader:

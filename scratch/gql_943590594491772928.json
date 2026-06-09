@@ -1,0 +1,283 @@
+{
+  "data": {
+    "tweetResult": {
+      "result": {
+        "__typename": "Tweet",
+        "core": {
+          "user_results": {
+            "result": {
+              "__typename": "User",
+              "affiliates_highlighted_label": {},
+              "has_graduated_access": true,
+              "has_nft_avatar": false,
+              "id": "VXNlcjoyMjk0MDIxOQ==",
+              "is_blue_verified": true,
+              "legacy": {
+                "blocked_by": false,
+                "blocking": false,
+                "can_dm": false,
+                "can_media_tag": false,
+                "created_at": "Thu Mar 05 16:33:48 +0000 2009",
+                "default_profile": false,
+                "default_profile_image": false,
+                "description": "",
+                "entities": {
+                  "description": {},
+                  "url": {
+                    "urls": [
+                      {
+                        "display_url": "linktr.ee/eminem",
+                        "expanded_url": "https://linktr.ee/eminem",
+                        "indices": [
+                          0,
+                          23
+                        ],
+                        "url": "https://t.co/23hQXzrB9k"
+                      }
+                    ]
+                  }
+                },
+                "fast_followers_count": 0,
+                "favourites_count": 6,
+                "follow_request_sent": false,
+                "followed_by": false,
+                "followers_count": 19296259,
+                "following": false,
+                "friends_count": 0,
+                "has_custom_timelines": false,
+                "is_translator": false,
+                "listed_count": 47851,
+                "location": "Detroit",
+                "media_count": 765,
+                "muting": false,
+                "name": "Marshall Mathers",
+                "needs_phone_verification": false,
+                "normal_followers_count": 19296259,
+                "notifications": false,
+                "possibly_sensitive": false,
+                "profile_banner_url": "https://pbs.twimg.com/profile_banners/22940219/1756223123",
+                "profile_image_url_https": "https://pbs.twimg.com/profile_images/1955676146584236033/7Qwv-0Fj_normal.jpg",
+                "profile_interstitial_type": "",
+                "protected": false,
+                "screen_name": "Eminem",
+                "statuses_count": 1522,
+                "time_zone": "",
+                "translator_type": "regular",
+                "url": "https://t.co/23hQXzrB9k",
+                "utc_offset": 0,
+                "verified": false,
+                "withheld_description": "",
+                "withheld_scope": ""
+              },
+              "profile_image_shape": "Circle",
+              "rest_id": "22940219",
+              "super_follow_eligible": false,
+              "super_followed_by": false,
+              "super_following": false
+            }
+          }
+        },
+        "edit_control": {
+          "edit_tweet_ids": [
+            "943590594491772928"
+          ],
+          "editable_until_msecs": "1513806303449",
+          "edits_remaining": "5",
+          "is_edit_eligible": true
+        },
+        "is_translatable": false,
+        "legacy": {
+          "bookmark_count": 64,
+          "bookmarked": false,
+          "conversation_id_str": "943590594491772928",
+          "created_at": "Wed Dec 20 21:15:03 +0000 2017",
+          "display_text_range": [
+            0,
+            24
+          ],
+          "entities": {
+            "media": [
+              {
+                "additional_media_info": {
+                  "description": "",
+                  "embeddable": true,
+                  "monetizable": true,
+                  "title": ""
+                },
+                "display_url": "pic.x.com/hDbpUb8BnJ",
+                "expanded_url": "https://x.com/Eminem/status/943590594491772928/video/1",
+                "ext_media_availability": {
+                  "status": "Available"
+                },
+                "id_str": "943561926340218880",
+                "indices": [
+                  25,
+                  48
+                ],
+                "media_key": "13_943561926340218880",
+                "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/943561926340218880/img/s0HDjV8X4Qhvpg3J.jpg",
+                "original_info": {
+                  "focus_rects": [],
+                  "height": 720,
+                  "width": 1280
+                },
+                "sizes": {
+                  "large": {
+                    "h": 720,
+                    "resize": "fit",
+                    "w": 1280
+                  },
+                  "medium": {
+                    "h": 675,
+                    "resize": "fit",
+                    "w": 1200
+                  },
+                  "small": {
+                    "h": 383,
+                    "resize": "fit",
+                    "w": 680
+                  },
+                  "thumb": {
+                    "h": 150,
+                    "resize": "crop",
+                    "w": 150
+                  }
+                },
+                "type": "video",
+                "url": "https://t.co/hDbpUb8BnJ",
+                "video_info": {
+                  "aspect_ratio": [
+                    16,
+                    9
+                  ],
+                  "duration_millis": 32366,
+                  "variants": [
+                    {
+                      "content_type": "application/x-mpegURL",
+                      "url": "https://video.twimg.com/amplify_video/943561926340218880/pl/x59Uiv_rr3j4Uko0.m3u8"
+                    },
+                    {
+                      "bitrate": 320000,
+                      "content_type": "video/mp4",
+                      "url": "https://video.twimg.com/amplify_video/943561926340218880/vid/320x180/Ba5efLU6DjP9_j0N.mp4"
+                    },
+                    {
+                      "bitrate": 832000,
+                      "content_type": "video/mp4",
+                      "url": "https://video.twimg.com/amplify_video/943561926340218880/vid/640x360/sUCXvkCEDMjG-49f.mp4"
+                    },
+                    {
+                      "bitrate": 2176000,
+                      "content_type": "video/mp4",
+                      "url": "https://video.twimg.com/amplify_video/943561926340218880/vid/1280x720/2RNJO2a6D60ZDTTi.mp4"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "extended_entities": {
+            "media": [
+              {
+                "additional_media_info": {
+                  "description": "",
+                  "embeddable": true,
+                  "monetizable": true,
+                  "title": ""
+                },
+                "display_url": "pic.x.com/hDbpUb8BnJ",
+                "expanded_url": "https://x.com/Eminem/status/943590594491772928/video/1",
+                "ext_media_availability": {
+                  "status": "Available"
+                },
+                "id_str": "943561926340218880",
+                "indices": [
+                  25,
+                  48
+                ],
+                "media_key": "13_943561926340218880",
+                "media_url_https": "https://pbs.twimg.com/amplify_video_thumb/943561926340218880/img/s0HDjV8X4Qhvpg3J.jpg",
+                "original_info": {
+                  "focus_rects": [],
+                  "height": 720,
+                  "width": 1280
+                },
+                "sizes": {
+                  "large": {
+                    "h": 720,
+                    "resize": "fit",
+                    "w": 1280
+                  },
+                  "medium": {
+                    "h": 675,
+                    "resize": "fit",
+                    "w": 1200
+                  },
+                  "small": {
+                    "h": 383,
+                    "resize": "fit",
+                    "w": 680
+                  },
+                  "thumb": {
+                    "h": 150,
+                    "resize": "crop",
+                    "w": 150
+                  }
+                },
+                "type": "video",
+                "url": "https://t.co/hDbpUb8BnJ",
+                "video_info": {
+                  "aspect_ratio": [
+                    16,
+                    9
+                  ],
+                  "duration_millis": 32366,
+                  "variants": [
+                    {
+                      "content_type": "application/x-mpegURL",
+                      "url": "https://video.twimg.com/amplify_video/943561926340218880/pl/x59Uiv_rr3j4Uko0.m3u8"
+                    },
+                    {
+                      "bitrate": 320000,
+                      "content_type": "video/mp4",
+                      "url": "https://video.twimg.com/amplify_video/943561926340218880/vid/320x180/Ba5efLU6DjP9_j0N.mp4"
+                    },
+                    {
+                      "bitrate": 832000,
+                      "content_type": "video/mp4",
+                      "url": "https://video.twimg.com/amplify_video/943561926340218880/vid/640x360/sUCXvkCEDMjG-49f.mp4"
+                    },
+                    {
+                      "bitrate": 2176000,
+                      "content_type": "video/mp4",
+                      "url": "https://video.twimg.com/amplify_video/943561926340218880/vid/1280x720/2RNJO2a6D60ZDTTi.mp4"
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "favorite_count": 31616,
+          "favorited": false,
+          "full_text": "Can\u2019t wait to share this https://t.co/hDbpUb8BnJ",
+          "id_str": "943590594491772928",
+          "is_quote_status": false,
+          "lang": "en",
+          "possibly_sensitive": false,
+          "possibly_sensitive_editable": true,
+          "quote_count": 820,
+          "reply_count": 722,
+          "retweet_count": 8349,
+          "retweeted": false,
+          "user_id_str": "22940219"
+        },
+        "rest_id": "943590594491772928",
+        "source": "<a href=\"https://studio.twitter.com\" rel=\"nofollow\">Twitter Media Studio</a>",
+        "unmention_data": {},
+        "views": {
+          "state": "Enabled"
+        }
+      }
+    }
+  }
+}

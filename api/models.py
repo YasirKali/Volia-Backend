@@ -36,6 +36,7 @@ class MediaInfo(BaseModel):
     platform: str
     url: str
     formats: List[FormatInfo] = []
+    is_image: bool = False
 
 
 class DownloadRequest(BaseModel):

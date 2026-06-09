@@ -33,6 +33,9 @@ PLATFORM_PATTERNS = {
         r"(?:https?://)?(?:www\.)?instagram\.com/tv/",
         r"(?:https?://)?(?:www\.)?instagram\.com/stories/",
     ],
+    "spotify": [
+        r"(?:https?://)?(?:open\.)?spotify\.com/",
+    ],
 }
 
 SUPPORTED_PLATFORMS = list(PLATFORM_PATTERNS.keys())
