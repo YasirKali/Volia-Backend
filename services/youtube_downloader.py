@@ -73,14 +73,20 @@ class YouTubeDownloader(BaseDownloader):
                 info = await loop.run_in_executor(None, _extract, ydl_opts)
             except Exception as e:
                 error_msg = str(e).lower()
+                logger.warning(f"[EXTRACT] First extraction attempt failed: {e}")
                 if "cookie" in error_msg or "database is locked" in error_msg or "could not copy" in error_msg:
+                    logger.info("[EXTRACT] Retrying extraction without cookies fallback...")
                     clean_opts = ydl_opts.copy()
                     clean_opts.pop('cookiesfrombrowser', None)
                     clean_opts.pop('cookiefile', None)
                     try:
                         info = await loop.run_in_executor(None, _extract, clean_opts)
+                        logger.info("[EXTRACT] Extraction retry without cookies succeeded!")
                     except Exception as retry_e:
-                        raise retry_e
+                        logger.error(f"[EXTRACT] Extraction retry also failed: {retry_e}")
+                        # Raise the original error if it was a bot check / cookie error,
+                        # as it is much more informative than the retry error.
+                        raise ValueError(f"Cookie authentication failed: {e} (Fallback retry failed: {retry_e})")
                 else:
                     raise
         
@@ -271,7 +277,9 @@ class YouTubeDownloader(BaseDownloader):
                 )
             except Exception as e:
                 error_msg = str(e).lower()
+                logger.warning(f"[DOWNLOAD] First download attempt failed: {e}")
                 if "cookie" in error_msg or "database is locked" in error_msg or "could not copy" in error_msg:
+                    logger.info("[DOWNLOAD] Retrying download without cookies fallback...")
                     clean_opts = ydl_opts.copy()
                     clean_opts.pop('cookiesfrombrowser', None)
                     clean_opts.pop('cookiefile', None)
@@ -286,16 +294,18 @@ class YouTubeDownloader(BaseDownloader):
                             return os.path.basename(filename)
                     try:
                         filename = await loop.run_in_executor(None, _download_no_cookies)
+                        logger.info("[DOWNLOAD] Download retry without cookies succeeded!")
                         return DownloadResponse(
                             success=True,
                             filename=filename,
                             message="Download completed successfully!"
                         )
                     except Exception as retry_e:
+                        logger.error(f"[DOWNLOAD] Download retry also failed: {retry_e}")
                         return DownloadResponse(
                             success=False,
                             filename=None,
-                            message=f"Download failed: {str(retry_e)}"
+                            message=f"Download failed: Cookie authentication failed: {str(e)} (Fallback retry failed: {str(retry_e)})"
                         )
                 return DownloadResponse(
                     success=False,
