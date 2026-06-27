@@ -328,12 +328,20 @@ def get_ydl_opts_with_cookies(base_opts: dict = None, custom_cookies_file: Optio
     opts.pop('cookiesfrombrowser', None)
     opts.pop('cookiefile', None)
     
-    if custom_cookies_file:
+    if custom_cookies_file and os.path.exists(custom_cookies_file):
         opts['cookiefile'] = custom_cookies_file
+        analysis = analyze_cookie_file(custom_cookies_file)
+        logger.info(f"[COOKIES] get_ydl_opts_with_cookies: Using custom_cookies_file={custom_cookies_file} ({analysis.get('message')})")
     else:
         # Add the best cookie options
         cookie_opts = get_cookie_opts()
         opts.update(cookie_opts)
+        cookiefile = cookie_opts.get('cookiefile')
+        if cookiefile and os.path.exists(cookiefile):
+            analysis = analyze_cookie_file(cookiefile)
+            logger.info(f"[COOKIES] get_ydl_opts_with_cookies: Fallback to get_cookie_opts() -> {cookiefile} ({analysis.get('message')})")
+        else:
+            logger.info(f"[COOKIES] get_ydl_opts_with_cookies: Fallback to get_cookie_opts(), no cookiefile found, result keys={list(cookie_opts.keys())}")
         
     return opts
 
@@ -628,7 +636,23 @@ import contextlib
 @contextlib.contextmanager
 def temp_cookies_file(cookies_text: Optional[str]):
     """Create a temporary Netscape cookies file from text if provided."""
-    if not cookies_text or not cookies_text.strip():
+    if not cookies_text or not cookies_text.strip() or cookies_text.strip() in ("null", "undefined"):
+        logger.info("[COOKIES] temp_cookies_file: No cookies text provided or it is null/undefined, yielding None")
+        yield None
+        return
+        
+    # Check if there is at least one valid tab-separated Netscape cookie line
+    has_valid_line = False
+    for line in cookies_text.splitlines():
+        trimmed_line = line.strip()
+        if trimmed_line and not trimmed_line.startswith('#'):
+            # Netscape cookies use exactly 7 tab-separated fields
+            if len(trimmed_line.split('\t')) >= 5:
+                has_valid_line = True
+                break
+                
+    if not has_valid_line:
+        logger.info("[COOKIES] temp_cookies_file: No valid tab-separated Netscape cookie lines found in text. Yielding None so server-side cookies can be used.")
         yield None
         return
         
@@ -637,7 +661,10 @@ def temp_cookies_file(cookies_text: Optional[str]):
     with tempfile.NamedTemporaryFile(mode='w', suffix='_cookies.txt', delete=False, encoding='utf-8') as f:
         f.write(cookies_text)
         temp_path = f.name
-        
+    
+    file_size = os.path.getsize(temp_path)
+    logger.info(f"[COOKIES] temp_cookies_file: Created temp file at {temp_path}, size={file_size} bytes, text_len={len(cookies_text)}")
+    
     try:
         yield temp_path
     finally:
@@ -645,6 +672,7 @@ def temp_cookies_file(cookies_text: Optional[str]):
         try:
             if os.path.exists(temp_path):
                 os.remove(temp_path)
+                logger.info(f"[COOKIES] temp_cookies_file: Cleaned up {temp_path}")
         except Exception:
             pass
 

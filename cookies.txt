@@ -13,9 +13,9 @@ support.hp.com	FALSE	/us-en/contact	FALSE	1796500961	MicrosoftApplicationsTeleme
 support.hp.com	FALSE	/us-en/contact	FALSE	1796500961	MicrosoftApplicationsTelemetryFirstLaunchTime	
 login3.id.hp.com	FALSE	/	TRUE	1799524741	_gd_svisitor	
 login3.id.hp.com	FALSE	/	TRUE	1799524741	_gd_visitor	
-.youtube.com	TRUE	/	TRUE	1795934217	VISITOR_INFO1_LIVE	lZRcpWOWS-Q
-.youtube.com	TRUE	/	TRUE	1795934217	VISITOR_PRIVACY_METADATA	CgJQSxIEGgAgDg%3D%3D
-.youtube.com	TRUE	/	TRUE	1795934202	__Secure-ROLLOUT_TOKEN	GLP3k8b455QD
+.youtube.com	TRUE	/	TRUE	1798141190	VISITOR_INFO1_LIVE	lZRcpWOWS-Q
+.youtube.com	TRUE	/	TRUE	1798141190	VISITOR_PRIVACY_METADATA	CgJQSxIEGgAgDg%3D%3D
+.youtube.com	TRUE	/	TRUE	1798141190	__Secure-ROLLOUT_TOKEN	GITb-puWqJUD
 .youtube.com	TRUE	/	TRUE	1795934217	__Secure-YNID	18.YT=2Ze-Sv79cEsC8dmNqFQsfR7SuhRQSPJS7Fp36cUi9MLGF-5vwx2uWZB6oGP1rZeGrVrgr_azVwlCkaCcvd45gRn-yxZ-msiTRVAvIfGbkIoUl8WWfxdNq0hEJzJiI_vDdUr_rUd6bHBXpzYjfwbBli4m5jnibHYp1me8brUZC_UIa8MdiE1QIonqhZ1SIP8LzGNhaoic5JSaYT6EfndCUqzKnIzao-uiAk-S9FPJSQ_ceIuV6Q2kr-8hrke2aggm6pIdaqjd9KTns5rH_A06He006rX9BV6HVEN_b5rL581o5eUKCRWTyG2yA5Cdiq5oa1h3jdpcBZCl1xcQ7m0wLA
 .youtube.com	TRUE	/	TRUE	1804795944	__Secure-YENID	
 .youtube.com	TRUE	/	TRUE	1793893145	NID	
@@ -28,6 +28,8 @@ login3.id.hp.com	FALSE	/	TRUE	1799524741	_gd_visitor
 .youtube.com	TRUE	/	TRUE	1809618567	__Secure-1PSIDCC	
 .youtube.com	TRUE	/	TRUE	1809618567	__Secure-3PSIDCC	
 .youtube.com	TRUE	/	TRUE	0	SOCS	CAI
+.youtube.com	TRUE	/	TRUE	1782590990	GPS	1
+.youtube.com	TRUE	/	TRUE	0	YSC	7bsiKlS2ttg
 .microsoft.com	TRUE	/	TRUE	1796501701	MC1	
 .microsoft.com	TRUE	/	TRUE	1800545536	MUID	
 .microsoft.com	TRUE	/	FALSE	1801029536	mbox	
@@ -421,8 +423,6 @@ af.pubmine.com	FALSE	/	TRUE	1796846712	__Host-equativ-pid
 .alibaba.com	TRUE	/	FALSE	1800442192	_ga_3L5VDLSZZZ	
 .alibaba.com	TRUE	/	TRUE	1802856667	cbc	
 .s.alicdn.com	TRUE	/	TRUE	1797409404	NWG	
-www.daraz.pk	FALSE	/mattresses	FALSE	1782456883	__wpkreporterwid_	
-www.daraz.pk	FALSE	/catalog	FALSE	1782456970	__wpkreporterwid_	
 www.daraz.pk	FALSE	/tag/4x4-matrix-keypad-for-arduino	FALSE	1785146222	__wpkreporterwid_	
 www.daraz.pk	FALSE	/tag/gt-fire	FALSE	1785147419	__wpkreporterwid_	
 www.daraz.pk	FALSE	/tag/solenoid-lock	FALSE	1785147646	__wpkreporterwid_	
@@ -537,16 +537,8 @@ e.pprasindh.gov.pk	FALSE	/	FALSE	1800813972	spprapp
 .pprasindh.gov.pk	TRUE	/	FALSE	1800814032	_ga	
 .pprasindh.gov.pk	TRUE	/	FALSE	1800814779	_ga_CF9KWQLD4L	
 portalsindh.eprocure.gov.pk	FALSE	/	FALSE	1797790049	cookiesession1	
-.arnofdv-b.online	TRUE	/	FALSE	1781880714	__ssds	
 .googlei.com	TRUE	/	TRUE	1800888710	sid	
 .bcgm1.com	TRUE	/	FALSE	1800888717	SESSION	
-arnofdv-b.online	FALSE	/	FALSE	1781880715	__ssuzjsr0	
-arnofdv-b.online	FALSE	/	FALSE	1781880715	__uzmaj0	
-arnofdv-b.online	FALSE	/	FALSE	1781880715	__uzmbj0	
-arnofdv-b.online	FALSE	/	FALSE	1781880715	__uzmcj0	
-arnofdv-b.online	FALSE	/	FALSE	1781880715	__uzmdj0	
-arnofdv-b.online	FALSE	/	FALSE	1781880715	__uzmfj0	
-arnofdv-b.online	FALSE	/	FALSE	1781880715	__uzmlj0	
 .ad.bcgm1.com	TRUE	/	TRUE	1797864716	redhash	
 chat.deepseek.com	FALSE	/	FALSE	1801060384	.thumbcache_6b2e5483f9d858d7c661c5e276b6a6ae	
 chat.deepseek.com	FALSE	/	FALSE	1801060383	smidV2	
@@ -568,7 +560,6 @@ chat.deepseek.com	FALSE	/	FALSE	1801060383	smidV2
 .twitter.com	TRUE	/	TRUE	1801073941	personalization_id	
 .deepseek.com	TRUE	/	TRUE	1789843952	intercom-device-id-guh50jw4	
 .t.co	TRUE	/	TRUE	1801073940	muc_ads	
-.bit.ly	TRUE	/	FALSE	1782111087	_bit	
 .reuters.com	TRUE	/	FALSE	1800781753	ABTasty	
 .reuters.com	TRUE	/	TRUE	1800695356	_awl	
 .reuters.com	TRUE	/	TRUE	1800695355	_cb	
@@ -577,8 +568,6 @@ chat.deepseek.com	FALSE	/	FALSE	1801060383	smidV2
 .reuters.com	TRUE	/	FALSE	1801127356	_ga	
 .reuters.com	TRUE	/	FALSE	1801127353	_lc2_fpi	
 .reuters.com	TRUE	/	FALSE	1801127355	_li_ss	
-.reuters.com	TRUE	/	TRUE	1782292154	permutive-id	
-.reuters.com	TRUE	/	TRUE	1782119359	__eoi	
 .reuters.com	TRUE	/	TRUE	1800263359	__gads	
 .reuters.com	TRUE	/	TRUE	1800263359	__gpi	
 .reuters.com	TRUE	/	TRUE	1798103364	datadome	
@@ -620,7 +609,6 @@ www.reuters.com	FALSE	/	FALSE	1798103352	usprivacy
 .pub.network	TRUE	/	TRUE	1801127398	_fsuid	
 .dawn.com	TRUE	/	FALSE	1800263416	FCCDCF	
 .dawn.com	TRUE	/	FALSE	1800608658	FCNEC	
-.dawn.com	TRUE	/	TRUE	1782119416	__eoi	
 .dawn.com	TRUE	/	TRUE	1800263416	__gads	
 .dawn.com	TRUE	/	TRUE	1800263416	__gpi	
 .dawn.com	TRUE	/	FALSE	1792400657	_cc_id	
@@ -632,8 +620,6 @@ www.reuters.com	FALSE	/	FALSE	1798103352	usprivacy
 discord.com	FALSE	/	TRUE	1801128245	__dcfduid	
 discord.com	FALSE	/	TRUE	1801128245	__sdcfduid	
 .openai.com	TRUE	/	FALSE	1798108558	oai-did	
-.openai.com	TRUE	/	FALSE	1782153905	_ga	
-.openai.com	TRUE	/	FALSE	1782153925	_ga_8MYC5SEFJ1	
 .openai.com	TRUE	/	TRUE	1798137904	cf_clearance	
 chatgpt.com	FALSE	/	FALSE	1797676563	oai-hlib	
 chatgpt.com	FALSE	/	FALSE	1803155876	_dd_s	
@@ -641,9 +627,7 @@ chatgpt.com	FALSE	/	FALSE	1803155876	_dd_s
 .convex.dev	TRUE	/	FALSE	1801161710	_ga_BE1B7P7T72	
 .vimeo.com	TRUE	/	TRUE	1798137906	player	
 .vimeo.com	TRUE	/	TRUE	1801161906	vuid	
-openai.com	FALSE	/	FALSE	1782153904	analytics_consent	
 openai.com	FALSE	/	FALSE	1798137902	country	
-openai.com	FALSE	/	FALSE	1782153904	marketing_consent	
 .reddit.com	TRUE	/	TRUE	1801161946	csv	
 .reddit.com	TRUE	/	TRUE	1801161940	edgebucket	
 .reddit.com	TRUE	/	TRUE	1802482149	loid	
@@ -660,7 +644,6 @@ openai.com	FALSE	/	FALSE	1782153904	marketing_consent
 .instagram.com	TRUE	/	TRUE	1805832400	ps_n	
 .instagram.com	TRUE	/	TRUE	1815597438	csrftoken	eYr2lDBmgqS2ReFjpnrlKfBGFIg0GOtK
 .nerdfonts.com	TRUE	/	FALSE	1801247758	__utma	
-.nerdfonts.com	TRUE	/	FALSE	1782455758	__utmz	
 .nerdfonts.com	TRUE	/	FALSE	1801247758	_ga	
 .nerdfonts.com	TRUE	/	FALSE	1801249335	_ga_FZ2KV65PN8	
 .protechts.net	TRUE	/	TRUE	1798384074	_pxvid	
@@ -685,7 +668,6 @@ news.google.com	FALSE	/	TRUE	1782680219	GN_PREF
 visualstudio.microsoft.com	FALSE	/	TRUE	1798449078	MSFPC	
 visualstudio.microsoft.com	FALSE	/	TRUE	1800943860	MicrosoftApplicationsTelemetryDeviceId	
 .gonet-ads.com	TRUE	/	TRUE	1798462074	pid	
-.dll-files.com	TRUE	/	TRUE	1782478057	__eoi	
 .dll-files.com	TRUE	/	TRUE	1800622057	__gads	
 .dll-files.com	TRUE	/	TRUE	1800622057	__gpi	
 .dll-files.com	TRUE	/	FALSE	1800622536	FCCDCF	
@@ -697,7 +679,6 @@ pcappstore.com	FALSE	/	FALSE	1798466244	_fcid
 .pcappstore.com	TRUE	/	FALSE	1798466244	ml_lp_prediction_g_d_all_worldwide_in	
 .pcappstore.com	TRUE	/	FALSE	1801490401	_ga_PGW6SZDCT1	
 .pcappstore.com	TRUE	/	FALSE	1801490401	_ga_VFQWFX3X1C	
-.dllme.com	TRUE	/	TRUE	1782478543	__eoi	
 .dllme.com	TRUE	/	TRUE	1800622543	__gads	
 .dllme.com	TRUE	/	TRUE	1800622543	__gpi	
 .dllme.com	TRUE	/	FALSE	1801490294	_ga	
@@ -710,7 +691,6 @@ pcappstore.com	FALSE	/	FALSE	1798466244	_fcid
 .filmfreeway.com	TRUE	/	FALSE	1801540988	_ga	
 .filmfreeway.com	TRUE	/	FALSE	1801540989	_ga_4VXMT0NZFX	
 .filmfreeway.com	TRUE	/	TRUE	1798516987	cf_clearance	
-filmfreeway.com	FALSE	/	TRUE	1782532985	_filmfreeway_session	
 api.1clickvpn.net	FALSE	/	TRUE	1798830403	lang	
 github.com	FALSE	/	TRUE	1799553374	_device_id	
 .sflix.ps	TRUE	/	TRUE	1796753844	fpestid	
@@ -732,7 +712,6 @@ learn.omacom.io	FALSE	/	FALSE	1799460871	reading_progress_2
 .x.com	TRUE	/	TRUE	1842037739	guest_id_ads	v1%3A177896573712071238
 .x.com	TRUE	/	TRUE	1842037739	guest_id_marketing	v1%3A177896573712071238
 .x.com	TRUE	/	TRUE	1802486584	personalization_id	
-.x.com	TRUE	/	TRUE	1781602481	__cf_bm	Q6IAtF7Dlfzckx9XO8ZaJdBl0PhFTXtHzT8TYVELhyA-1781600681.0600734-1.0.1.1-o2H185IsnaAk3fQ9kJZEGQGtB7Hd.LiyDQsf77XkHxZDA1AsIYxbSezJVsH.EdI2xf.vLkRDutVy3E5AUqx3.5KlUFtaRyz9yMEEMLz7rJO1wNzkrvvyPZQKnjtJRwFX
 x.com	FALSE	/	FALSE	1783478592	g_state	
 .www.linkedin.com	TRUE	/	TRUE	1799462918	bscookie	
 .business.whatsapp.com	TRUE	/	TRUE	1799554111	datr	
@@ -1123,7 +1102,6 @@ www.recaptcha.net	FALSE	/recaptcha	TRUE	1786210855	_GRECAPTCHA
 www.speedtest.net	FALSE	/	TRUE	1786296221	lrswap	
 .thrtle.com	TRUE	/	TRUE	1788024219	sc	
 .thrtle.com	TRUE	/	TRUE	1788369472	mc	
-.exelator.com	TRUE	/	TRUE	1781639568	ud	
 .eyeota.net	TRUE	/	TRUE	1802280223	mako_uid	
 .linksynergy.com	TRUE	/	TRUE	1802280221	rmuid	
 live.rezync.com	FALSE	/	TRUE	1804440221	sd-session-id	
@@ -1214,8 +1192,6 @@ myaccount.google.com	FALSE	/	TRUE	1805623666	__Secure-OSID
 .cdnwidget.com	TRUE	/	TRUE	1805032197	__3idcontext	
 .blismedia.com	TRUE	/	TRUE	1802629479	b	
 .cbx-rtb.com	TRUE	/	TRUE	1802625479	llum	
-.shb-sync.com	TRUE	/	TRUE	1782407879	smart_r	
-.shb-sync.com	TRUE	/	TRUE	1782407879	smart_usr	
 .brand-display.com	TRUE	/	TRUE	1805649480	_knxq_	
 .sitescout.com	TRUE	/	TRUE	1802625480	ssi	
 .xplosion.de	TRUE	/	TRUE	1802625480	ep	

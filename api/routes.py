@@ -83,6 +83,9 @@ async def extract_media_info(request: ExtractRequest):
     Auto-detects platform if not specified.
     """
     try:
+        has_cookies = request.cookies is not None and len(request.cookies.strip()) > 0
+        cookie_len = len(request.cookies) if request.cookies else 0
+        logger.info(f"[EXTRACT] url={request.url}, platform={request.platform}, has_cookies={has_cookies}, cookie_text_len={cookie_len}")
         info = await download_manager.extract_info(request.url, request.platform, request.cookies)
         return info
     except ValueError as e:
