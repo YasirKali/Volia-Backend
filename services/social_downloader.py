@@ -369,7 +369,8 @@ class SocialDownloader(BaseDownloader):
             'no_color': True,
             'socket_timeout': 30,
             'skip_download': True,
-            'format': None,
+            'ignoreconfig': True,
+            'format': 'best/bestvideo/bestaudio',
         })
         
         loop = asyncio.get_event_loop()

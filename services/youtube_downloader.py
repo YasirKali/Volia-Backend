@@ -64,12 +64,15 @@ class YouTubeDownloader(BaseDownloader):
                 'no_warnings': True,
                 'extract_flat': False,
                 'no_color': True,
+                'socket_timeout': 30,
                 'skip_download': True,
-                # format=None prevents yt-dlp from applying its default format
-                # selector (bestvideo*+bestaudio/best) which fails with
-                # "Requested format is not available" on datacenter IPs that
-                # can only resolve a limited subset of formats.
-                'format': None,
+                # Avoid loading any local yt-dlp config files
+                'ignoreconfig': True,
+                # Explicitly set a highly permissive format selector to prevent
+                # yt-dlp from defaulting to bestvideo*+bestaudio/best, which
+                # fails with "Requested format is not available" if cipher
+                # decryption is unavailable.
+                'format': 'best/bestvideo/bestaudio',
             }, custom_cookies_file=temp_path)
             
             loop = asyncio.get_event_loop()
