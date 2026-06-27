@@ -24,6 +24,15 @@ _preferred_browser: Optional[str] = None
 _cookie_file_path: Optional[str] = None
 
 
+def is_server_environment() -> bool:
+    """Check if running in a headless server or container environment (e.g. Railway, Docker)."""
+    if sys.platform != 'win32' and not os.getenv('DISPLAY') and not os.getenv('WAYLAND_DISPLAY'):
+        return True
+    if os.getenv('RAILWAY_STATIC_URL') or os.getenv('PORT') or os.getenv('DOCKER_ENV'):
+        return True
+    return False
+
+
 def set_preferred_browser(browser: str):
     """Set the preferred browser for cookie extraction."""
     global _preferred_browser
@@ -78,6 +87,12 @@ def get_cookie_opts() -> dict:
         logger.info(f"Using manual cookie file: {_cookie_file_path}")
         return {'cookiefile': _cookie_file_path}
     
+    # In headless server environments (like Railway), browser cookies are not available.
+    # Return empty options immediately to avoid failures or logs.
+    if is_server_environment():
+        logger.info("Running in a server environment. Skipping browser cookie check.")
+        return {}
+    
     # Strategy 2: Browser cookies
     browsers = _get_browser_order()
     
@@ -100,6 +115,8 @@ def get_cookie_opts() -> dict:
 def _try_browser_cookies(browser: str) -> Optional[dict]:
     """
     Try to get cookie options for a specific browser.
+    On non-Windows (e.g. Railway/Docker Linux), no desktop browsers
+    are available, so return None to skip browser cookie extraction.
     """
     if browser in ('edge', 'chrome', 'brave', 'opera', 'chromium'):
         profile_path = _copy_chromium_cookies(browser)
@@ -107,7 +124,12 @@ def _try_browser_cookies(browser: str) -> Optional[dict]:
             # yt-dlp's cookiesfrombrowser accepts (browser, profile_path)
             return {'cookiesfrombrowser': (browser, profile_path)}
     
-    # Fallback for Firefox or if copy failed
+    # On non-Windows (headless servers), there are no desktop browsers
+    # installed, so don't attempt cookiesfrombrowser at all.
+    if sys.platform != 'win32':
+        return None
+    
+    # Fallback for Firefox or local Windows dev if copy failed
     return {'cookiesfrombrowser': (browser,)}
 
 
@@ -428,6 +450,29 @@ def auto_setup_cookies() -> dict:
     Returns a status dict with info about what was set up.
     """
     global _cookie_file_path
+    
+    # Check if running in a server environment where no browsers are available
+    if is_server_environment():
+        # Look for static cookies.txt in the backend folder as a fallback
+        backend_dir = os.path.dirname(os.path.dirname(__file__))
+        cookie_path = os.path.join(backend_dir, "cookies.txt")
+        if os.path.exists(cookie_path):
+            _cookie_file_path = cookie_path
+            logger.info("✅ Server environment: using static cookies.txt fallback")
+            return {
+                'success': True,
+                'browser': None,
+                'cookie_file': cookie_path,
+                'message': 'Using static cookies.txt fallback in server environment'
+            }
+        
+        logger.info("☁️ Server environment: skipped browser cookie export")
+        return {
+            'success': False,
+            'browser': None,
+            'cookie_file': None,
+            'message': 'Skipped browser cookie setup on headless server environment'
+        }
     
     browsers = _get_browser_order()
     
