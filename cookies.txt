@@ -56,7 +56,6 @@ sourceforge.net	FALSE	/	TRUE	1804431715	sourceforge
 .pippio.com	TRUE	/	TRUE	1796502022	did	
 .pippio.com	TRUE	/	TRUE	1796502022	didts	
 .quantserve.com	TRUE	/	TRUE	1799180436	mc	
-.quantserve.com	TRUE	/	TRUE	1781365356	sp	
 code.visualstudio.com	FALSE	/	TRUE	1796502411	MSFPC	
 code.visualstudio.com	FALSE	/	TRUE	1796546826	MicrosoftApplicationsTelemetryDeviceId	
 chromewebstore.google.com	FALSE	/	TRUE	1799526550	OSID	
@@ -385,7 +384,6 @@ www.meetup.com	FALSE	/	FALSE	1796844691	orion_lsid
 .adtdp.com	TRUE	/	TRUE	1799868698	uid	
 .doceree.com	TRUE	/	TRUE	1796844758	_docereeInit	
 .wordpress.com	TRUE	/	FALSE	1799870702	__utma	
-.wordpress.com	TRUE	/	FALSE	1781078702	__utmz	
 .wordpress.com	TRUE	/	FALSE	1799024703	cto_bidid	
 .wordpress.com	TRUE	/	FALSE	1799024703	cto_bundle	
 .wordpress.com	TRUE	/	FALSE	1799870702	tk_ai	
@@ -394,7 +392,6 @@ af.pubmine.com	FALSE	/	TRUE	1796846712	__Host-equativ-pid
 .sindhisangat.com	TRUE	/	FALSE	1799870724	_ga	
 1clickvpn.net	FALSE	/	TRUE	1796899873	lang	
 1clickvpn.net	FALSE	/	FALSE	0	uuid	
-.google.com	TRUE	/	TRUE	1781271535	__Secure-BUCKET	
 .google.com	TRUE	/	TRUE	1804274219	__Secure-ENID	
 .google.com	TRUE	/	FALSE	1787144663	SEARCH_SAMESITE	
 .google.com	TRUE	/	FALSE	1812642066	APISID	
@@ -422,21 +419,8 @@ af.pubmine.com	FALSE	/	TRUE	1796846712	__Host-equativ-pid
 .alibaba.com	TRUE	/	TRUE	1800434283	cna	
 .alibaba.com	TRUE	/	TRUE	1800434283	ug_se_c	
 .alibaba.com	TRUE	/	FALSE	1800442192	_ga_3L5VDLSZZZ	
-.alibaba.com	TRUE	/	TRUE	1781425403	isg	
-.alibaba.com	TRUE	/	TRUE	1781425403	tfstk	
 .alibaba.com	TRUE	/	TRUE	1802856667	cbc	
-www.alibaba.com	FALSE	/	FALSE	1781425403	g_state	
 .s.alicdn.com	TRUE	/	TRUE	1797409404	NWG	
-www.daraz.pk	FALSE	/tag/egpu-enclosure	FALSE	1781425418	__wpkreporterwid_	
-www.daraz.pk	FALSE	/tag/power-supply-650w	FALSE	1781427660	__wpkreporterwid_	
-www.daraz.pk	FALSE	/	TRUE	1781427700	__itrace_wid	
-www.daraz.pk	FALSE	/tag/exp-gdc	FALSE	1781427717	__wpkreporterwid_	
-www.daraz.pk	FALSE	/audio-docking-stations-22	FALSE	1781427753	__wpkreporterwid_	
-www.daraz.pk	FALSE	/products	FALSE	1781427780	__wpkreporterwid_	
-www.daraz.pk	FALSE	/tag/radeon-vega-8	FALSE	1781427877	__wpkreporterwid_	
-www.daraz.pk	FALSE	/tag/exp-gdc-dock	FALSE	1781428682	__wpkreporterwid_	
-www.daraz.pk	FALSE	/tag/nvidia-gtx-1080-price	FALSE	1781428739	__wpkreporterwid_	
-www.daraz.pk	FALSE	/tag/graphic-card-rtx-5090	FALSE	1781441677	__wpkreporterwid_	
 www.daraz.pk	FALSE	/mattresses	FALSE	1782456883	__wpkreporterwid_	
 www.daraz.pk	FALSE	/catalog	FALSE	1782456970	__wpkreporterwid_	
 www.daraz.pk	FALSE	/tag/4x4-matrix-keypad-for-arduino	FALSE	1785146222	__wpkreporterwid_	
@@ -483,7 +467,6 @@ www.hp.com	FALSE	/	FALSE	1797409563	_dyid_server
 .hp.com	TRUE	/	TRUE	1799569508	__attentive_cco	
 .hp.com	TRUE	/	TRUE	1797409510	fs_uid	
 .hp.com	TRUE	/	TRUE	1800001508	kndctr_5E34123F5245B2CD0A490D45_AdobeOrg_identity	
-.hp.com	TRUE	/	FALSE	1781425548	_pn	
 .hp.com	TRUE	/	TRUE	1797409563	inside-us8	
 .hp.com	TRUE	/	TRUE	1799569566	__attentive_id	
 .hp.com	TRUE	/	TRUE	1799569566	_attn_	
@@ -513,7 +496,6 @@ www.hp.com	FALSE	/	FALSE	1797409563	_dyid_server
 .hp.com	TRUE	/	FALSE	1800433764	s_ecid	
 .hp.com	TRUE	/	FALSE	1800433764	s_vi	
 .ext.hp.com	TRUE	/	TRUE	1797409508	brwsr	
-linkto.ext.hp.com	FALSE	/	TRUE	1781425508	irld	
 .flashtalking.com	TRUE	/	TRUE	1800037525	flashtalkingad1	
 .flashtalking.com	TRUE	/	TRUE	1802612911	_D9J	
 .igodigital.com	TRUE	/	TRUE	1800433566	igodigitaltc2	
@@ -550,7 +532,6 @@ linkto.ext.hp.com	FALSE	/	TRUE	1781425508	irld
 .zestrogaming.com	TRUE	/	FALSE	1800449690	_ga_8C3J1TDN5X	
 zestrogaming.com	FALSE	/	TRUE	1800449688	conv_person	
 zestrogaming.com	FALSE	/	TRUE	1800449688	conv_session	
-zestrogaming.com	FALSE	/	FALSE	1781441689	pbid	
 www.amazon.com	FALSE	/	FALSE	1796133587	csm-hit	
 e.pprasindh.gov.pk	FALSE	/	FALSE	1800813972	spprapp	
 .pprasindh.gov.pk	TRUE	/	FALSE	1800814032	_ga	
@@ -751,6 +732,7 @@ learn.omacom.io	FALSE	/	FALSE	1799460871	reading_progress_2
 .x.com	TRUE	/	TRUE	1842037739	guest_id_ads	v1%3A177896573712071238
 .x.com	TRUE	/	TRUE	1842037739	guest_id_marketing	v1%3A177896573712071238
 .x.com	TRUE	/	TRUE	1802486584	personalization_id	
+.x.com	TRUE	/	TRUE	1781602481	__cf_bm	Q6IAtF7Dlfzckx9XO8ZaJdBl0PhFTXtHzT8TYVELhyA-1781600681.0600734-1.0.1.1-o2H185IsnaAk3fQ9kJZEGQGtB7Hd.LiyDQsf77XkHxZDA1AsIYxbSezJVsH.EdI2xf.vLkRDutVy3E5AUqx3.5KlUFtaRyz9yMEEMLz7rJO1wNzkrvvyPZQKnjtJRwFX
 x.com	FALSE	/	FALSE	1783478592	g_state	
 .www.linkedin.com	TRUE	/	TRUE	1799462918	bscookie	
 .business.whatsapp.com	TRUE	/	TRUE	1799554111	datr	
@@ -1141,8 +1123,6 @@ www.recaptcha.net	FALSE	/recaptcha	TRUE	1786210855	_GRECAPTCHA
 www.speedtest.net	FALSE	/	TRUE	1786296221	lrswap	
 .thrtle.com	TRUE	/	TRUE	1788024219	sc	
 .thrtle.com	TRUE	/	TRUE	1788369472	mc	
-.exelator.com	TRUE	/	TRUE	1781112223	EE	
-.exelator.com	TRUE	/	TRUE	1781112223	udo	
 .exelator.com	TRUE	/	TRUE	1781639568	ud	
 .eyeota.net	TRUE	/	TRUE	1802280223	mako_uid	
 .linksynergy.com	TRUE	/	TRUE	1802280221	rmuid	
@@ -1393,13 +1373,10 @@ proton.me	FALSE	/	TRUE	1805956827	Features
 .character.ai	TRUE	/	FALSE	1807285354	cto_bundle	
 .character.ai	TRUE	/	FALSE	1808149545	web-next-auth	
 .character.ai	TRUE	/	FALSE	1805126867	AMP_MKTG_39bbdcaee6	
-.character.ai	TRUE	/	FALSE	1781365349	_gcl_au	
-.character.ai	TRUE	/	TRUE	1781366867	_rdt_uuid	
 .character.ai	TRUE	/	FALSE	1805126929	FCNEC	
 .character.ai	TRUE	/	TRUE	1789141560	__eoi	
 .character.ai	TRUE	/	TRUE	1807285560	__gads	
 .character.ai	TRUE	/	TRUE	1807285560	__gpi	
-.character.ai	TRUE	/	FALSE	1781367028	_fbp	
 .character.ai	TRUE	/	FALSE	1805127571	AMP_39bbdcaee6	
 .adsrvr.org	TRUE	/	TRUE	1805125356	TDCPM	
 .adsrvr.org	TRUE	/	TRUE	1805125356	TDID	

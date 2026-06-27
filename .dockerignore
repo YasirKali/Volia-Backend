@@ -1,0 +1,12 @@
+.git
+.gitignore
+__pycache__/
+*.py[cod]
+.env
+venv/
+downloads/
+scratch/
+cookies.txt
+playlist.spotdl
+next_data.json
+-DZUvY1ECokg/
