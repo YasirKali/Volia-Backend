@@ -4,9 +4,12 @@ Handles extraction and downloading of YouTube content.
 """
 
 import asyncio
+import logging
 import os
 import yt_dlp
 from typing import Optional
+
+logger = logging.getLogger(__name__)
 from api.models import MediaInfo, FormatInfo, DownloadResponse
 from services.base_downloader import BaseDownloader
 from services.cookie_helper import get_ydl_opts_with_cookies, temp_cookies_file
