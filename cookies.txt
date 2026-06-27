@@ -13,10 +13,10 @@ support.hp.com	FALSE	/us-en/contact	FALSE	1796500961	MicrosoftApplicationsTeleme
 support.hp.com	FALSE	/us-en/contact	FALSE	1796500961	MicrosoftApplicationsTelemetryFirstLaunchTime	
 login3.id.hp.com	FALSE	/	TRUE	1799524741	_gd_svisitor	
 login3.id.hp.com	FALSE	/	TRUE	1799524741	_gd_visitor	
-.youtube.com	TRUE	/	TRUE	1798141190	VISITOR_INFO1_LIVE	lZRcpWOWS-Q
-.youtube.com	TRUE	/	TRUE	1798141190	VISITOR_PRIVACY_METADATA	CgJQSxIEGgAgDg%3D%3D
+.youtube.com	TRUE	/	TRUE	1798142091	VISITOR_INFO1_LIVE	lZRcpWOWS-Q
+.youtube.com	TRUE	/	TRUE	1798142091	VISITOR_PRIVACY_METADATA	CgJQSxIEGgAgDg%3D%3D
 .youtube.com	TRUE	/	TRUE	1798141190	__Secure-ROLLOUT_TOKEN	GITb-puWqJUD
-.youtube.com	TRUE	/	TRUE	1795934217	__Secure-YNID	18.YT=2Ze-Sv79cEsC8dmNqFQsfR7SuhRQSPJS7Fp36cUi9MLGF-5vwx2uWZB6oGP1rZeGrVrgr_azVwlCkaCcvd45gRn-yxZ-msiTRVAvIfGbkIoUl8WWfxdNq0hEJzJiI_vDdUr_rUd6bHBXpzYjfwbBli4m5jnibHYp1me8brUZC_UIa8MdiE1QIonqhZ1SIP8LzGNhaoic5JSaYT6EfndCUqzKnIzao-uiAk-S9FPJSQ_ceIuV6Q2kr-8hrke2aggm6pIdaqjd9KTns5rH_A06He006rX9BV6HVEN_b5rL581o5eUKCRWTyG2yA5Cdiq5oa1h3jdpcBZCl1xcQ7m0wLA
+.youtube.com	TRUE	/	TRUE	1798142091	__Secure-YNID	19.YT=plOKbd2TthVoqSraBj8OnvtQon5HLUQ9TSXkuYgws-uyfrjcA2dWAlxSjOY-YRE2SY2fWXJr46D9H0OjJfuNWabX-0y3rzVbvPXQ708FYB4Pg-q0KbQKhePJ_8nh1Zvz4ien5_f4KGky8FvX-kg_qEusf9lsWWGBH61jTEHELqLKYEM-E-IKB-8EC4jZsCgCLqH2h3wJkXg4CmScVD3RMHIaYgicGm-Ye2605bEoFi9A-5xJHmd4Dx0-svLhP7WCEspNwwjZubyfglLgLH-krNUWlpbGubluuHxtssDwCr9KSiVWZyIRQKmzDDPYSlqeXnYnQC3Gd4oZ9EAhkuk0xg
 .youtube.com	TRUE	/	TRUE	1804795944	__Secure-YENID	
 .youtube.com	TRUE	/	TRUE	1793893145	NID	
 .youtube.com	TRUE	/	TRUE	1812642067	__Secure-3PAPISID	
@@ -29,7 +29,6 @@ login3.id.hp.com	FALSE	/	TRUE	1799524741	_gd_visitor
 .youtube.com	TRUE	/	TRUE	1809618567	__Secure-3PSIDCC	
 .youtube.com	TRUE	/	TRUE	0	SOCS	CAI
 .youtube.com	TRUE	/	TRUE	1782590990	GPS	1
-.youtube.com	TRUE	/	TRUE	0	YSC	7bsiKlS2ttg
 .microsoft.com	TRUE	/	TRUE	1796501701	MC1	
 .microsoft.com	TRUE	/	TRUE	1800545536	MUID	
 .microsoft.com	TRUE	/	FALSE	1801029536	mbox	

@@ -328,6 +328,14 @@ def get_ydl_opts_with_cookies(base_opts: dict = None, custom_cookies_file: Optio
     opts.pop('cookiesfrombrowser', None)
     opts.pop('cookiefile', None)
     
+    # Default anti-bot extractor arguments for YouTube in 2026
+    if 'extractor_args' not in opts:
+        opts['extractor_args'] = {
+            'youtube': {
+                'player_client': ['default', '-android_sdkless']
+            }
+        }
+    
     if custom_cookies_file and os.path.exists(custom_cookies_file):
         opts['cookiefile'] = custom_cookies_file
         analysis = analyze_cookie_file(custom_cookies_file)
@@ -601,7 +609,9 @@ def analyze_cookie_file(path: str) -> dict:
         num_cookies = 0
         youtube_cookies = 0
         google_cookies = 0
+        expired_cookies = 0
         domains = set()
+        current_time = time.time()
         
         for line in lines:
             line = line.strip()
@@ -612,6 +622,14 @@ def analyze_cookie_file(path: str) -> dict:
                 num_cookies += 1
                 domain = parts[0].lower()
                 domains.add(domain)
+                
+                try:
+                    expiry = int(parts[4])
+                    if 0 < expiry < current_time:
+                        expired_cookies += 1
+                except Exception:
+                    pass
+                    
                 if 'youtube.com' in domain:
                     youtube_cookies += 1
                 elif 'google.com' in domain:
@@ -624,8 +642,9 @@ def analyze_cookie_file(path: str) -> dict:
             "num_cookies": num_cookies,
             "youtube_cookies_count": youtube_cookies,
             "google_cookies_count": google_cookies,
+            "expired_cookies_count": expired_cookies,
             "domains_sample": sorted(list(domains))[:10],
-            "message": f"Loaded {num_cookies} cookies ({youtube_cookies} YouTube, {google_cookies} Google)"
+            "message": f"Loaded {num_cookies} cookies ({youtube_cookies} YouTube, {google_cookies} Google, {expired_cookies} Expired)"
         }
     except Exception as e:
         return {"exists": True, "error": str(e), "message": f"Error parsing cookie file: {str(e)}"}
