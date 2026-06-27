@@ -57,8 +57,22 @@ def get_preferred_browser() -> Optional[str]:
 
 
 def get_cookie_file() -> Optional[str]:
-    """Get the current cookie file path."""
-    return _cookie_file_path
+    """Get the current cookie file path, checking memory first then disk fallback."""
+    global _cookie_file_path
+    if _cookie_file_path and os.path.exists(_cookie_file_path):
+        return _cookie_file_path
+    
+    # Fallback checking disk dynamically (handles multi-worker process sync)
+    backend_dir = os.path.dirname(os.path.dirname(__file__))
+    user_cookies_path = os.path.join(backend_dir, "user_cookies.txt")
+    if os.path.exists(user_cookies_path):
+        return user_cookies_path
+        
+    static_cookies_path = os.path.join(backend_dir, "cookies.txt")
+    if os.path.exists(static_cookies_path):
+        return static_cookies_path
+        
+    return None
 
 
 def _get_browser_order() -> List[str]:
@@ -77,20 +91,35 @@ def get_cookie_opts() -> dict:
     Get the best yt-dlp cookie options.
     
     Tries multiple strategies:
-    1. If a manual cookie file is set, use that
-    2. Try cookiesfrombrowser with each browser in order
+    1. If a manual cookie file is set in memory, use that
+    2. Dynamically check for user-uploaded user_cookies.txt on disk
+    3. Dynamically check for static cookies.txt on disk
+    4. Try cookiesfrombrowser with each browser in order (local machine only)
     
     Returns a dict of yt-dlp options for cookies.
     """
-    # Strategy 1: Manual cookie file
+    # Strategy 1: Manual cookie file set in memory
     if _cookie_file_path and os.path.exists(_cookie_file_path):
-        logger.info(f"Using manual cookie file: {_cookie_file_path}")
+        logger.info(f"Using manual cookie file (in memory): {_cookie_file_path}")
         return {'cookiefile': _cookie_file_path}
+        
+    # Strategy 2: Check for user-uploaded custom cookies dynamically (process-safe)
+    backend_dir = os.path.dirname(os.path.dirname(__file__))
+    user_cookies_path = os.path.join(backend_dir, "user_cookies.txt")
+    if os.path.exists(user_cookies_path):
+        logger.info(f"Using user-uploaded cookie file: {user_cookies_path}")
+        return {'cookiefile': user_cookies_path}
+        
+    # Strategy 3: Check for static cookies.txt fallback dynamically
+    static_cookies_path = os.path.join(backend_dir, "cookies.txt")
+    if os.path.exists(static_cookies_path):
+        logger.info(f"Using static fallback cookie file: {static_cookies_path}")
+        return {'cookiefile': static_cookies_path}
     
     # In headless server environments (like Railway), browser cookies are not available.
     # Return empty options immediately to avoid failures or logs.
     if is_server_environment():
-        logger.info("Running in a server environment. Skipping browser cookie check.")
+        logger.info("Running in a server environment and no custom cookies uploaded. Skipping browser check.")
         return {}
     
     # Strategy 2: Browser cookies
@@ -444,8 +473,8 @@ def export_cookies_from_browser(browser: str = None, output_path: str = None) ->
 
 def auto_setup_cookies() -> dict:
     """
-    Automatically detect and set up the best cookie source.
-    Tries exporting from each available browser.
+    Auto-detect and set up the best available browser cookies.
+    Tries each browser in order and exports cookies to a file.
     
     Returns a status dict with info about what was set up.
     """
@@ -459,10 +488,12 @@ def auto_setup_cookies() -> dict:
         if os.path.exists(cookie_path):
             _cookie_file_path = cookie_path
             logger.info("✅ Server environment: using static cookies.txt fallback")
+            analysis = analyze_cookie_file(cookie_path)
             return {
                 'success': True,
                 'browser': None,
                 'cookie_file': cookie_path,
+                'cookie_analysis': analysis,
                 'message': 'Using static cookies.txt fallback in server environment'
             }
         
@@ -471,6 +502,7 @@ def auto_setup_cookies() -> dict:
             'success': False,
             'browser': None,
             'cookie_file': None,
+            'cookie_analysis': None,
             'message': 'Skipped browser cookie setup on headless server environment'
         }
     
@@ -482,10 +514,12 @@ def auto_setup_cookies() -> dict:
         
         if cookie_file:
             _cookie_file_path = cookie_file
+            analysis = analyze_cookie_file(cookie_file)
             return {
                 'success': True,
                 'browser': browser,
                 'cookie_file': cookie_file,
+                'cookie_analysis': analysis,
                 'message': f'Successfully exported cookies from {browser}'
             }
     
@@ -547,4 +581,49 @@ def clear_user_cookies() -> bool:
             logger.error(f"Failed to remove {path}: {e}")
     _cookie_file_path = None
     return True
+
+
+def analyze_cookie_file(path: str) -> dict:
+    """Analyze the cookie file and return details about it."""
+    if not path or not os.path.exists(path):
+        return {"exists": False, "message": "File does not exist"}
+        
+    try:
+        size = os.path.getsize(path)
+        with open(path, "r", encoding="utf-8", errors="ignore") as f:
+            lines = f.readlines()
+            
+        num_lines = len(lines)
+        num_cookies = 0
+        youtube_cookies = 0
+        google_cookies = 0
+        domains = set()
+        
+        for line in lines:
+            line = line.strip()
+            if not line or line.startswith('#'):
+                continue
+            parts = line.split('\t')
+            if len(parts) >= 7:
+                num_cookies += 1
+                domain = parts[0].lower()
+                domains.add(domain)
+                if 'youtube.com' in domain:
+                    youtube_cookies += 1
+                elif 'google.com' in domain:
+                    google_cookies += 1
+                    
+        return {
+            "exists": True,
+            "size_bytes": size,
+            "num_lines": num_lines,
+            "num_cookies": num_cookies,
+            "youtube_cookies_count": youtube_cookies,
+            "google_cookies_count": google_cookies,
+            "domains_sample": sorted(list(domains))[:10],
+            "message": f"Loaded {num_cookies} cookies ({youtube_cookies} YouTube, {google_cookies} Google)"
+        }
+    except Exception as e:
+        return {"exists": True, "error": str(e), "message": f"Error parsing cookie file: {str(e)}"}
+
 

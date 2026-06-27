@@ -21,7 +21,7 @@ from services.platform_detector import detect_platform, SUPPORTED_PLATFORMS
 from services.cookie_helper import (
     set_preferred_browser, get_preferred_browser, get_cookie_file,
     auto_setup_cookies, export_cookies_from_browser, SUPPORTED_BROWSERS,
-    get_cookie_opts, save_user_cookies, clear_user_cookies
+    get_cookie_opts, save_user_cookies, clear_user_cookies, analyze_cookie_file
 )
 
 router = APIRouter()
@@ -379,10 +379,15 @@ class BrowserSettingRequest(BaseModel):
 @router.get("/settings/cookies")
 async def get_cookie_settings():
     """Get current cookie/browser settings."""
+    cookie_path = get_cookie_file()
+    analysis = None
+    if cookie_path:
+        analysis = analyze_cookie_file(cookie_path)
     return {
         "preferred_browser": get_preferred_browser(),
-        "cookie_file": get_cookie_file(),
+        "cookie_file": cookie_path,
         "supported_browsers": SUPPORTED_BROWSERS,
+        "cookie_analysis": analysis,
     }
 
 
@@ -445,10 +450,12 @@ async def upload_user_cookies(request: CookieUploadRequest):
     """Upload custom cookies.txt content."""
     try:
         path = save_user_cookies(request.cookies_text)
+        analysis = analyze_cookie_file(path)
         return {
             "success": True,
             "cookie_file": path,
-            "message": "Cookies uploaded and applied successfully!"
+            "cookie_analysis": analysis,
+            "message": f"Cookies uploaded and applied successfully! {analysis.get('message', '')}"
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Failed to save cookies: {str(e)}")
@@ -460,6 +467,8 @@ async def delete_user_cookies():
     clear_user_cookies()
     return {
         "success": True,
+        "cookie_file": None,
+        "cookie_analysis": None,
         "message": "Custom cookies cleared successfully!"
     }
 
