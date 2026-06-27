@@ -21,7 +21,7 @@ from services.platform_detector import detect_platform, SUPPORTED_PLATFORMS
 from services.cookie_helper import (
     set_preferred_browser, get_preferred_browser, get_cookie_file,
     auto_setup_cookies, export_cookies_from_browser, SUPPORTED_BROWSERS,
-    get_cookie_opts
+    get_cookie_opts, save_user_cookies, clear_user_cookies
 )
 
 router = APIRouter()
@@ -434,4 +434,33 @@ async def export_cookies(request: BrowserSettingRequest):
             detail=f"Failed to export cookies from {request.browser}. "
                    f"Make sure {request.browser} is installed and you are logged into the sites you want to download from."
         )
+
+
+class CookieUploadRequest(BaseModel):
+    cookies_text: str
+
+
+@router.post("/settings/cookies/upload")
+async def upload_user_cookies(request: CookieUploadRequest):
+    """Upload custom cookies.txt content."""
+    try:
+        path = save_user_cookies(request.cookies_text)
+        return {
+            "success": True,
+            "cookie_file": path,
+            "message": "Cookies uploaded and applied successfully!"
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to save cookies: {str(e)}")
+
+
+@router.delete("/settings/cookies/upload")
+async def delete_user_cookies():
+    """Delete uploaded custom cookies."""
+    clear_user_cookies()
+    return {
+        "success": True,
+        "message": "Custom cookies cleared successfully!"
+    }
+
 

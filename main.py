@@ -53,6 +53,14 @@ app.include_router(api_router, prefix="/api")
 async def startup_event():
     """Auto-setup browser cookies on startup."""
     def _setup():
+        # 1. Check for custom user-uploaded cookies first
+        user_cookie_path = os.path.join(os.path.dirname(__file__), "user_cookies.txt")
+        if os.path.exists(user_cookie_path):
+            set_cookie_file(user_cookie_path)
+            logger.info("✅ Using custom user_cookies.txt for authentication")
+            return
+
+        # 2. Fall back to static cookies.txt
         cookie_path = os.path.join(os.path.dirname(__file__), "cookies.txt")
         if os.path.exists(cookie_path):
             set_cookie_file(cookie_path)

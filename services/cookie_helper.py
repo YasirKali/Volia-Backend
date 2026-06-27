@@ -521,3 +521,30 @@ def auto_setup_cookies() -> dict:
         'cookie_file': None,
         'message': 'Could not access cookies from any browser. Try closing your browser and retrying, or export cookies manually.'
     }
+
+
+def save_user_cookies(cookies_text: str) -> str:
+    """Save user-uploaded custom cookies.txt content and activate it."""
+    backend_dir = os.path.dirname(os.path.dirname(__file__))
+    path = os.path.join(backend_dir, "user_cookies.txt")
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(cookies_text)
+    set_cookie_file(path)
+    logger.info(f"✅ Saved custom cookies.txt to {path}")
+    return path
+
+
+def clear_user_cookies() -> bool:
+    """Remove the custom user-uploaded cookies.txt file and deactivate it."""
+    global _cookie_file_path
+    backend_dir = os.path.dirname(os.path.dirname(__file__))
+    path = os.path.join(backend_dir, "user_cookies.txt")
+    if os.path.exists(path):
+        try:
+            os.remove(path)
+            logger.info("🗑️ Removed custom user_cookies.txt file")
+        except Exception as e:
+            logger.error(f"Failed to remove {path}: {e}")
+    _cookie_file_path = None
+    return True
+
