@@ -9,7 +9,7 @@ import yt_dlp
 from typing import Optional
 from api.models import MediaInfo, FormatInfo, DownloadResponse
 from services.base_downloader import BaseDownloader
-from services.cookie_helper import get_ydl_opts_with_cookies
+from services.cookie_helper import get_ydl_opts_with_cookies, temp_cookies_file
 
 
 class YouTubeDownloader(BaseDownloader):
@@ -53,37 +53,36 @@ class YouTubeDownloader(BaseDownloader):
         
         return " ".join(parts)
     
-    async def extract_info(self, url: str) -> MediaInfo:
+    async def extract_info(self, url: str, cookies: Optional[str] = None) -> MediaInfo:
         """Extract video information and available formats."""
-        ydl_opts = get_ydl_opts_with_cookies({
-            'quiet': True,
-            'no_warnings': True,
-            'extract_flat': False,
-            'no_color': True,
-        })
-        
-        loop = asyncio.get_event_loop()
-        
-        def _extract(opts):
-            with yt_dlp.YoutubeDL(opts) as ydl:
-                return ydl.extract_info(url, download=False)
-        
-        try:
-            info = await loop.run_in_executor(None, _extract, ydl_opts)
-        except Exception as e:
-            error_msg = str(e).lower()
-            if "cookie" in error_msg or "database is locked" in error_msg or "could not copy" in error_msg:
-                # If cookie extraction failed, retry without cookies
-                # This allows non-age-restricted videos to still work
-                clean_opts = ydl_opts.copy()
-                clean_opts.pop('cookiesfrombrowser', None)
-                clean_opts.pop('cookiefile', None)
-                try:
-                    info = await loop.run_in_executor(None, _extract, clean_opts)
-                except Exception as retry_e:
-                    raise retry_e
-            else:
-                raise
+        with temp_cookies_file(cookies) as temp_path:
+            ydl_opts = get_ydl_opts_with_cookies({
+                'quiet': True,
+                'no_warnings': True,
+                'extract_flat': False,
+                'no_color': True,
+            }, custom_cookies_file=temp_path)
+            
+            loop = asyncio.get_event_loop()
+            
+            def _extract(opts):
+                with yt_dlp.YoutubeDL(opts) as ydl:
+                    return ydl.extract_info(url, download=False)
+            
+            try:
+                info = await loop.run_in_executor(None, _extract, ydl_opts)
+            except Exception as e:
+                error_msg = str(e).lower()
+                if "cookie" in error_msg or "database is locked" in error_msg or "could not copy" in error_msg:
+                    clean_opts = ydl_opts.copy()
+                    clean_opts.pop('cookiesfrombrowser', None)
+                    clean_opts.pop('cookiefile', None)
+                    try:
+                        info = await loop.run_in_executor(None, _extract, clean_opts)
+                    except Exception as retry_e:
+                        raise retry_e
+                else:
+                    raise
         
         if not info:
             raise ValueError("Could not extract video information")
@@ -237,70 +236,69 @@ class YouTubeDownloader(BaseDownloader):
             formats=formats,
         )
     
-    async def download(self, url: str, format_id: str, output_dir: str) -> DownloadResponse:
+    async def download(self, url: str, format_id: str, output_dir: str, cookies: Optional[str] = None) -> DownloadResponse:
         """Download video in the specified format."""
         output_template = os.path.join(output_dir, '%(title)s.%(ext)s')
         
-        ydl_opts = get_ydl_opts_with_cookies({
-            'format': format_id,
-            'outtmpl': output_template,
-            'quiet': True,
-            'no_warnings': True,
-            'no_color': True,
-            'merge_output_format': 'mp4',
-        })
-        
-        loop = asyncio.get_event_loop()
-        
-        def _download():
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                info = ydl.extract_info(url, download=True)
-                filename = ydl.prepare_filename(info)
-                # Check for merged file
-                base, _ = os.path.splitext(filename)
-                mp4_file = base + '.mp4'
-                if os.path.exists(mp4_file):
-                    return os.path.basename(mp4_file)
-                return os.path.basename(filename)
-        
-        try:
-            filename = await loop.run_in_executor(None, _download)
-            return DownloadResponse(
-                success=True,
-                filename=filename,
-                message="Download completed successfully!"
-            )
-        except Exception as e:
-            error_msg = str(e).lower()
-            if "cookie" in error_msg or "database is locked" in error_msg or "could not copy" in error_msg:
-                # Retry without cookies
-                clean_opts = ydl_opts.copy()
-                clean_opts.pop('cookiesfrombrowser', None)
-                clean_opts.pop('cookiefile', None)
-                def _download_no_cookies():
-                    with yt_dlp.YoutubeDL(clean_opts) as ydl:
-                        info = ydl.extract_info(url, download=True)
-                        filename = ydl.prepare_filename(info)
-                        base, _ = os.path.splitext(filename)
-                        mp4_file = base + '.mp4'
-                        if os.path.exists(mp4_file):
-                            return os.path.basename(mp4_file)
-                        return os.path.basename(filename)
-                try:
-                    filename = await loop.run_in_executor(None, _download_no_cookies)
-                    return DownloadResponse(
-                        success=True,
-                        filename=filename,
-                        message="Download completed successfully!"
-                    )
-                except Exception as retry_e:
-                    return DownloadResponse(
-                        success=False,
-                        filename=None,
-                        message=f"Download failed: {str(retry_e)}"
-                    )
-            return DownloadResponse(
-                success=False,
-                filename=None,
-                message=f"Download failed: {str(e)}"
-            )
+        with temp_cookies_file(cookies) as temp_path:
+            ydl_opts = get_ydl_opts_with_cookies({
+                'format': format_id,
+                'outtmpl': output_template,
+                'quiet': True,
+                'no_warnings': True,
+                'no_color': True,
+                'merge_output_format': 'mp4',
+            }, custom_cookies_file=temp_path)
+            
+            loop = asyncio.get_event_loop()
+            
+            def _download():
+                with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+                    info = ydl.extract_info(url, download=True)
+                    filename = ydl.prepare_filename(info)
+                    base, _ = os.path.splitext(filename)
+                    mp4_file = base + '.mp4'
+                    if os.path.exists(mp4_file):
+                        return os.path.basename(mp4_file)
+                    return os.path.basename(filename)
+            
+            try:
+                filename = await loop.run_in_executor(None, _download)
+                return DownloadResponse(
+                    success=True,
+                    filename=filename,
+                    message="Download completed successfully!"
+                )
+            except Exception as e:
+                error_msg = str(e).lower()
+                if "cookie" in error_msg or "database is locked" in error_msg or "could not copy" in error_msg:
+                    clean_opts = ydl_opts.copy()
+                    clean_opts.pop('cookiesfrombrowser', None)
+                    clean_opts.pop('cookiefile', None)
+                    def _download_no_cookies():
+                        with yt_dlp.YoutubeDL(clean_opts) as ydl:
+                            info = ydl.extract_info(url, download=True)
+                            filename = ydl.prepare_filename(info)
+                            base, _ = os.path.splitext(filename)
+                            mp4_file = base + '.mp4'
+                            if os.path.exists(mp4_file):
+                                return os.path.basename(mp4_file)
+                            return os.path.basename(filename)
+                    try:
+                        filename = await loop.run_in_executor(None, _download_no_cookies)
+                        return DownloadResponse(
+                            success=True,
+                            filename=filename,
+                            message="Download completed successfully!"
+                        )
+                    except Exception as retry_e:
+                        return DownloadResponse(
+                            success=False,
+                            filename=None,
+                            message=f"Download failed: {str(retry_e)}"
+                        )
+                return DownloadResponse(
+                    success=False,
+                    filename=None,
+                    message=f"Download failed: {str(e)}"
+                )

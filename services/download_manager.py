@@ -45,7 +45,7 @@ class DownloadManager:
             return SocialDownloader(platform)
         return downloader
     
-    async def extract_info(self, url: str, platform: Optional[str] = None) -> MediaInfo:
+    async def extract_info(self, url: str, platform: Optional[str] = None, cookies: Optional[str] = None) -> MediaInfo:
         """
         Extract media info from URL.
         Auto-detects platform if not specified.
@@ -64,12 +64,12 @@ class DownloadManager:
         downloader = self._get_downloader(platform)
         
         try:
-            info = await downloader.extract_info(url)
+            info = await downloader.extract_info(url, cookies=cookies)
             return info
         except Exception as e:
             raise ValueError(f"Failed to extract media info: {str(e)}")
     
-    async def download(self, url: str, format_id: str, platform: Optional[str] = None) -> DownloadResponse:
+    async def download(self, url: str, format_id: str, platform: Optional[str] = None, cookies: Optional[str] = None) -> DownloadResponse:
         """
         Download media from URL in specified format.
         """
@@ -85,7 +85,7 @@ class DownloadManager:
         
         downloader = self._get_downloader(platform)
         
-        result = await downloader.download(url, format_id, self.downloads_dir)
+        result = await downloader.download(url, format_id, self.downloads_dir, cookies=cookies)
         
         # Save to history
         if result.success:

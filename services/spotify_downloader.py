@@ -125,7 +125,7 @@ class SpotifyDownloader(BaseDownloader):
         
         return entity
 
-    async def extract_info(self, url: str) -> MediaInfo:
+    async def extract_info(self, url: str, cookies: Optional[str] = None) -> MediaInfo:
         """
         Extract playlist/album/track metadata from the Spotify embed page.
         This is fast and doesn't require spotdl or API credentials.
@@ -215,7 +215,7 @@ class SpotifyDownloader(BaseDownloader):
             is_image=False,
         )
     
-    async def download(self, url: str, format_id: str, output_dir: str) -> DownloadResponse:
+    async def download(self, url: str, format_id: str, output_dir: str, cookies: Optional[str] = None) -> DownloadResponse:
         """
         Download method wrapper around download_stream.
         Consumes the stream generator and returns the final response.

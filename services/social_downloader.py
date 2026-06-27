@@ -225,7 +225,7 @@ class SocialDownloader(BaseDownloader):
                 
         return await loop.run_in_executor(None, _fetch)
 
-    async def extract_info(self, url: str) -> MediaInfo:
+    async def extract_info(self, url: str, cookies: Optional[str] = None) -> MediaInfo:
         """Extract media information from the URL."""
         # Try instaloader for Instagram
         if self.platform_name == "instagram":
@@ -585,7 +585,7 @@ class SocialDownloader(BaseDownloader):
             formats=formats,
         )
     
-    async def download(self, url: str, format_id: str, output_dir: str) -> DownloadResponse:
+    async def download(self, url: str, format_id: str, output_dir: str, cookies: Optional[str] = None) -> DownloadResponse:
         """Download media in the specified format."""
         # Check if we can download Instagram via instaloader
         if self.platform_name == "instagram" and (

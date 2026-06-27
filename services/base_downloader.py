@@ -14,14 +14,14 @@ class BaseDownloader(ABC):
     platform_name: str = "unknown"
     
     @abstractmethod
-    async def extract_info(self, url: str) -> MediaInfo:
+    async def extract_info(self, url: str, cookies: Optional[str] = None) -> MediaInfo:
         """
         Extract media information and available formats from the URL.
         """
         pass
     
     @abstractmethod
-    async def download(self, url: str, format_id: str, output_dir: str) -> DownloadResponse:
+    async def download(self, url: str, format_id: str, output_dir: str, cookies: Optional[str] = None) -> DownloadResponse:
         """
         Download the media in the specified format.
         """

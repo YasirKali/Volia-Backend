@@ -316,18 +316,11 @@ def _copy_firefox_cookies() -> Optional[str]:
     return None
 
 
-def get_ydl_opts_with_cookies(base_opts: dict = None) -> dict:
+def get_ydl_opts_with_cookies(base_opts: dict = None, custom_cookies_file: Optional[str] = None) -> dict:
     """
     Get yt-dlp options with the best available cookie configuration.
     Merges cookie options into any base options provided.
-    
-    Usage:
-        opts = get_ydl_opts_with_cookies({
-            'quiet': True,
-            'no_warnings': True,
-        })
-        with yt_dlp.YoutubeDL(opts) as ydl:
-            ...
+    If a custom_cookies_file path is provided, it overrides all other cookies.
     """
     opts = base_opts.copy() if base_opts else {}
     
@@ -335,10 +328,13 @@ def get_ydl_opts_with_cookies(base_opts: dict = None) -> dict:
     opts.pop('cookiesfrombrowser', None)
     opts.pop('cookiefile', None)
     
-    # Add the best cookie options
-    cookie_opts = get_cookie_opts()
-    opts.update(cookie_opts)
-    
+    if custom_cookies_file:
+        opts['cookiefile'] = custom_cookies_file
+    else:
+        # Add the best cookie options
+        cookie_opts = get_cookie_opts()
+        opts.update(cookie_opts)
+        
     return opts
 
 
@@ -625,5 +621,31 @@ def analyze_cookie_file(path: str) -> dict:
         }
     except Exception as e:
         return {"exists": True, "error": str(e), "message": f"Error parsing cookie file: {str(e)}"}
+
+
+import contextlib
+
+@contextlib.contextmanager
+def temp_cookies_file(cookies_text: Optional[str]):
+    """Create a temporary Netscape cookies file from text if provided."""
+    if not cookies_text or not cookies_text.strip():
+        yield None
+        return
+        
+    # Write to a temporary file
+    # We use a suffix of .txt so yt-dlp recognizes it
+    with tempfile.NamedTemporaryFile(mode='w', suffix='_cookies.txt', delete=False, encoding='utf-8') as f:
+        f.write(cookies_text)
+        temp_path = f.name
+        
+    try:
+        yield temp_path
+    finally:
+        # Always clean up the temporary file
+        try:
+            if os.path.exists(temp_path):
+                os.remove(temp_path)
+        except Exception:
+            pass
 
 

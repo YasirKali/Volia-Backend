@@ -83,7 +83,7 @@ async def extract_media_info(request: ExtractRequest):
     Auto-detects platform if not specified.
     """
     try:
-        info = await download_manager.extract_info(request.url, request.platform)
+        info = await download_manager.extract_info(request.url, request.platform, request.cookies)
         return info
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -100,7 +100,8 @@ async def download_media(request: DownloadRequest):
         result = await download_manager.download(
             request.url, 
             request.format_id,
-            request.platform
+            request.platform,
+            request.cookies
         )
         if not result.success:
             raise HTTPException(status_code=400, detail=result.message)

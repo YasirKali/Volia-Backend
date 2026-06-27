@@ -9,6 +9,7 @@ from typing import Optional, List
 class ExtractRequest(BaseModel):
     url: str
     platform: Optional[str] = None  # auto-detect if not provided
+    cookies: Optional[str] = None   # User-specific Netscape cookies text
 
 
 class FormatInfo(BaseModel):
@@ -43,6 +44,7 @@ class DownloadRequest(BaseModel):
     url: str
     format_id: str
     platform: Optional[str] = None
+    cookies: Optional[str] = None   # User-specific Netscape cookies text
 
 
 class DownloadResponse(BaseModel):
