@@ -368,6 +368,8 @@ class SocialDownloader(BaseDownloader):
             'extract_flat': False,
             'no_color': True,
             'socket_timeout': 30,
+            'skip_download': True,
+            'format': None,
         })
         
         loop = asyncio.get_event_loop()
@@ -415,7 +417,7 @@ class SocialDownloader(BaseDownloader):
                             "This Instagram post requires authentication. Please log in to Instagram in your "
                             "browser, then go to Settings and click 'Sync Browser Cookies' in Volia Settings."
                         )
-                    raise retry_e
+                    raise ValueError(f"Cookie authentication failed: {e} (Fallback retry failed: {retry_e})")
             else:
                 raise
         

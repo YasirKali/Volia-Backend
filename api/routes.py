@@ -240,6 +240,9 @@ def build_yt_dlp_command(url: str, mode: str, quality: str, format: str) -> list
     elif os.path.exists('K:/Volia/volia-backend/cookies.txt'):
         base_cmd += ['--cookies', 'K:/Volia/volia-backend/cookies.txt']
 
+    # Anti-bot extractor args (must match get_ydl_opts_with_cookies)
+    base_cmd.extend(['--extractor-args', 'youtube:player-client=default,-android_sdkless'])
+
     if mode == 'audio':
         base_cmd += [
             '--extract-audio',          # extract audio only
