@@ -51,7 +51,26 @@ app.include_router(api_router, prefix="/api")
 
 @app.on_event("startup")
 async def startup_event():
-    """Auto-setup browser cookies on startup."""
+    """Auto-setup browser cookies on startup and check environment."""
+    import shutil
+    
+    # Check for JS runtime needed by yt-dlp to solve YouTube signature/cipher challenges
+    js_runtimes = ["node", "deno", "bun"]
+    found_runtime = None
+    for rt in js_runtimes:
+        if shutil.which(rt):
+            found_runtime = rt
+            break
+            
+    if found_runtime:
+        logger.info(f"✅ Found JavaScript runtime for yt-dlp challenges: '{found_runtime}'")
+    else:
+        logger.warning(
+            "⚠️  WARNING: No JavaScript runtime (Node.js, Deno, or Bun) was found in your environment path! "
+            "yt-dlp requires a JS runtime to solve YouTube's signature challenges. "
+            "Without one, high-resolution formats (1080p, 4K, etc.) will be missing or fail with 'Requested format is not available'."
+        )
+
     def _setup():
         # 1. Check for custom user-uploaded cookies first
         user_cookie_path = os.path.join(os.path.dirname(__file__), "user_cookies.txt")
