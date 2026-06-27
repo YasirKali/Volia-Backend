@@ -483,35 +483,55 @@ async def delete_user_cookies():
 @router.get("/debug")
 async def debug_info():
     """Diagnostic endpoint to inspect the deployed environment."""
-    import shutil
-    import sys
-    import yt_dlp
-    
-    # Check JS runtime
-    js_runtimes = ["node", "deno", "bun"]
-    found_runtime = None
-    for rt in js_runtimes:
-        if shutil.which(rt):
-            found_runtime = rt
-            break
-            
-    # Check cookie files
-    backend_dir = os.path.dirname(os.path.dirname(__file__))
-    user_cookies_path = os.path.join(backend_dir, "user_cookies.txt")
-    static_cookies_path = os.path.join(backend_dir, "cookies.txt")
-    
-    user_cookies_exists = os.path.exists(user_cookies_path)
-    static_cookies_exists = os.path.exists(static_cookies_path)
-    
-    return {
-        "python_version": sys.version,
-        "yt_dlp_version": yt_dlp.__version__,
-        "js_runtime_found": found_runtime,
-        "user_cookies_exists": user_cookies_exists,
-        "static_cookies_exists": static_cookies_exists,
-        "current_directory": os.getcwd(),
-        "env_path": os.environ.get("PATH", ""),
-        "code_version": "v1.1-debug-endpoints"
-    }
+    import traceback
+    try:
+        import shutil
+        import sys
+        import yt_dlp
+        
+        # Check JS runtime
+        js_runtimes = ["node", "deno", "bun"]
+        found_runtime = None
+        for rt in js_runtimes:
+            if shutil.which(rt):
+                found_runtime = rt
+                break
+                
+        # Check cookie files
+        backend_dir = os.path.dirname(os.path.dirname(__file__))
+        user_cookies_path = os.path.join(backend_dir, "user_cookies.txt")
+        static_cookies_path = os.path.join(backend_dir, "cookies.txt")
+        
+        user_cookies_exists = os.path.exists(user_cookies_path)
+        static_cookies_exists = os.path.exists(static_cookies_path)
+        
+        # Safe version retrieval
+        yt_version = "unknown"
+        try:
+            yt_version = yt_dlp.__version__
+        except Exception:
+            try:
+                from yt_dlp.version import __version__ as v
+                yt_version = v
+            except Exception:
+                pass
+        
+        return {
+            "status": "success",
+            "python_version": sys.version,
+            "yt_dlp_version": yt_version,
+            "js_runtime_found": found_runtime,
+            "user_cookies_exists": user_cookies_exists,
+            "static_cookies_exists": static_cookies_exists,
+            "current_directory": os.getcwd(),
+            "env_path": os.environ.get("PATH", ""),
+            "code_version": "v1.2-safe-debug"
+        }
+    except Exception as e:
+        return {
+            "status": "error",
+            "error": str(e),
+            "traceback": traceback.format_exc()
+        }
 
 
