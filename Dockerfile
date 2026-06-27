@@ -18,6 +18,8 @@ COPY api ./api
 COPY services ./services
 COPY main.py ./main.py
 COPY spotdl_runner.py ./spotdl_runner.py
+COPY cookies.txt* ./
+COPY user_cookies.txt* ./
 
 RUN mkdir -p /app/downloads
 
