@@ -316,6 +316,25 @@ def _copy_firefox_cookies() -> Optional[str]:
     return None
 
 
+def get_js_runtimes() -> dict:
+    """
+    Build the yt-dlp `js_runtimes` option dict based on which JavaScript
+    runtime is actually installed.
+
+    yt-dlp 2026+ only enables `deno` by default. If deno is missing but
+    node/bun/quickjs is installed, those must be enabled explicitly,
+    otherwise YouTube signature & n-challenge solving fails and only
+    images (no video/audio formats) are returned.
+    """
+    # Preference order mirrors what yt-dlp registers as supported runtimes.
+    for runtime in ('deno', 'node', 'bun', 'quickjs'):
+        if shutil.which(runtime):
+            return {runtime: {}}
+    # Fallback to yt-dlp defaults (deno) so behaviour is unchanged when
+    # nothing is detected.
+    return {'deno': {}}
+
+
 def get_ydl_opts_with_cookies(base_opts: dict = None, custom_cookies_file: Optional[str] = None) -> dict:
     """
     Get yt-dlp options with the best available cookie configuration.
@@ -335,6 +354,12 @@ def get_ydl_opts_with_cookies(base_opts: dict = None, custom_cookies_file: Optio
                 'player_client': ['default', '-android_sdkless']
             }
         }
+
+    # Enable an installed JS runtime for YouTube signature/n-challenge solving.
+    # yt-dlp 2026+ only enables deno by default; explicitly enable whatever
+    # runtime is present (node/bun/quickjs) so high-res formats are returned.
+    if 'js_runtimes' not in opts:
+        opts['js_runtimes'] = get_js_runtimes()
     
     if custom_cookies_file and os.path.exists(custom_cookies_file):
         opts['cookiefile'] = custom_cookies_file

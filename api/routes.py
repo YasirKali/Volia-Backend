@@ -21,7 +21,8 @@ from services.platform_detector import detect_platform, SUPPORTED_PLATFORMS
 from services.cookie_helper import (
     set_preferred_browser, get_preferred_browser, get_cookie_file,
     auto_setup_cookies, export_cookies_from_browser, SUPPORTED_BROWSERS,
-    get_cookie_opts, save_user_cookies, clear_user_cookies, analyze_cookie_file
+    get_cookie_opts, save_user_cookies, clear_user_cookies, analyze_cookie_file,
+    get_js_runtimes
 )
 
 router = APIRouter()
@@ -242,6 +243,14 @@ def build_yt_dlp_command(url: str, mode: str, quality: str, format: str) -> list
 
     # Anti-bot extractor args (must match get_ydl_opts_with_cookies)
     base_cmd.extend(['--extractor-args', 'youtube:player-client=default,-android_sdkless'])
+
+    # Enable an installed JS runtime for YouTube signature/n-challenge solving.
+    # yt-dlp 2026+ only enables deno by default; pass the detected runtime so
+    # video/audio formats (not just images) are available for download.
+    js_runtimes = get_js_runtimes()
+    for runtime in js_runtimes.keys():
+        base_cmd.extend(['--js-runtimes', runtime])
+        break
 
     if mode == 'audio':
         audio_output_formats = {'mp3', 'm4a', 'wav', 'ogg', 'opus', 'flac', 'aac', 'best'}
