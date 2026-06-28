@@ -244,12 +244,16 @@ def build_yt_dlp_command(url: str, mode: str, quality: str, format: str) -> list
     base_cmd.extend(['--extractor-args', 'youtube:player-client=default,-android_sdkless'])
 
     if mode == 'audio':
-        base_cmd += [
-            '--extract-audio',          # extract audio only
-            '--audio-format', format or 'mp3',   # convert to mp3/m4a/wav etc
-            '--audio-quality', '0',     # best quality
-            '-f', 'bestaudio/best',
-        ]
+        audio_output_formats = {'mp3', 'm4a', 'wav', 'ogg', 'opus', 'flac', 'aac', 'best'}
+        if format and format not in audio_output_formats:
+            base_cmd += ['-f', f'{format}/bestaudio/best']
+        else:
+            base_cmd += [
+                '--extract-audio',          # extract audio only
+                '--audio-format', format or 'mp3',   # convert to mp3/m4a/wav etc
+                '--audio-quality', '0',     # best quality
+                '-f', 'bestaudio/best',
+            ]
     elif mode == 'video':
         # video only no audio
         base_cmd += ['-f', f'{format}/bestvideo/best' if format else 'bestvideo/best']
