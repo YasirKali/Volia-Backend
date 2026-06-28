@@ -68,11 +68,11 @@ class YouTubeDownloader(BaseDownloader):
                 'skip_download': True,
                 # Avoid loading any local yt-dlp config files
                 'ignoreconfig': True,
-                # Explicitly set a highly permissive format selector to prevent
-                # yt-dlp from defaulting to bestvideo*+bestaudio/best, which
-                # fails with "Requested format is not available" if cipher
-                # decryption is unavailable.
-                'format': 'best/bestvideo/bestaudio',
+                # Metadata extraction must not depend on one chosen download
+                # format being available. We build the user's format picker
+                # from raw formats below.
+                'format': None,
+                'simulate': True,
             }, custom_cookies_file=temp_path)
             
             loop = asyncio.get_event_loop()
@@ -86,14 +86,20 @@ class YouTubeDownloader(BaseDownloader):
             except Exception as e:
                 error_msg = str(e).lower()
                 logger.warning(f"[EXTRACT] First extraction attempt failed: {e}")
-                if "cookie" in error_msg or "database is locked" in error_msg or "could not copy" in error_msg:
-                    logger.info("[EXTRACT] Retrying extraction without cookies fallback...")
+                if (
+                    "cookie" in error_msg
+                    or "database is locked" in error_msg
+                    or "could not copy" in error_msg
+                    or "requested format is not available" in error_msg
+                ):
+                    logger.info("[EXTRACT] Retrying extraction without cookies/format fallback...")
                     clean_opts = ydl_opts.copy()
                     clean_opts.pop('cookiesfrombrowser', None)
                     clean_opts.pop('cookiefile', None)
+                    clean_opts['format'] = None
                     try:
                         info = await loop.run_in_executor(None, _extract, clean_opts)
-                        logger.info("[EXTRACT] Extraction retry without cookies succeeded!")
+                        logger.info("[EXTRACT] Extraction retry without cookies/format succeeded!")
                     except Exception as retry_e:
                         logger.error(f"[EXTRACT] Extraction retry also failed: {retry_e}")
                         # Raise the original error if it was a bot check / cookie error,
