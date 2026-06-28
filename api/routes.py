@@ -202,12 +202,12 @@ def get_format_for_url(url: str, quality: str = None) -> str:
     
     # YouTube - use quality-based format
     quality_map = {
-        '4k': 'bestvideo[height<=2160]+bestaudio/best',
-        '2k': 'bestvideo[height<=1440]+bestaudio/best',
-        '1080p': 'bestvideo[height<=1080]+bestaudio/best',
-        '720p': 'bestvideo[height<=720]+bestaudio/best',
-        '480p': 'bestvideo[height<=480]+bestaudio/best',
-        '360p': 'bestvideo[height<=360]+bestaudio/best',
+        '4k': 'bestvideo[height<=2160]+bestaudio/best[height<=2160]/best',
+        '2k': 'bestvideo[height<=1440]+bestaudio/best[height<=1440]/best',
+        '1080p': 'bestvideo[height<=1080]+bestaudio/best[height<=1080]/best',
+        '720p': 'bestvideo[height<=720]+bestaudio/best[height<=720]/best',
+        '480p': 'bestvideo[height<=480]+bestaudio/best[height<=480]/best',
+        '360p': 'bestvideo[height<=360]+bestaudio/best[height<=360]/best',
         'max': 'bestvideo+bestaudio/best',
     }
     
@@ -252,10 +252,11 @@ def build_yt_dlp_command(url: str, mode: str, quality: str, format: str) -> list
         ]
     elif mode == 'video':
         # video only no audio
-        base_cmd += ['-f', format or 'bestvideo/best']
+        base_cmd += ['-f', f'{format}/bestvideo/best' if format else 'bestvideo/best']
     else:
         # video + audio (default)
-        base_cmd += ['-f', format or get_format_for_url(url, quality)]
+        auto_format = get_format_for_url(url, quality)
+        base_cmd += ['-f', f'{format}/{auto_format}' if format else auto_format]
 
     base_cmd.append(url)
     return base_cmd
